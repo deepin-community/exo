@@ -1,0 +1,35 @@
+#!/usr/bin/make -f
+
+export DEB_LDFLAGS_MAINT_APPEND=-Wl,--as-needed -Wl,-O1 -Wl,-z,defs
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+
+EXO2_LIBNAME=2
+EXO_SOVERSION=0
+EXO2_SONAME=libexo-$(EXO2_LIBNAME)-$(EXO_SOVERSION)
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+		dh_auto_configure -- --enable-gtk-doc
+
+override_dh_install:
+	# Debianise
+	#sed -i -e 's/^WebBrowser=.*/WebBrowser=debian-sensible-browser/' \
+	#	-e 's/TerminalEmulator=.*/TerminalEmulator=debian-x-terminal-emulator/' \
+	#	debian/tmp/etc/xdg/xfce4/helpers.rc
+
+	## Create a muttng helper from the mutt one
+	#sed -e 's/utt/uttng/;s/Icon=muttng/Icon=mutt/' \
+	#	<debian/tmp/usr/share/xfce4/helpers/mutt.desktop \
+	#	>debian/tmp/usr/share/xfce4/helpers/muttng.desktop
+
+	## Drop multi-arch path from mail helpers since we install the perl script
+	## exo-compose-mail in a non-multiarch directory (/u/s/xfce4/exo)
+	#sed -i -e '/X-XFCE-CommandsWithParameter=.*exo-compose-mail/ s#lib/$(DEB_HOST_MULTIARCH)#share#' \
+	#	debian/tmp/usr/share/xfce4/helpers/*.desktop
+
+	dh_install -X .la
+
+override_dh_missing:
+	dh_missing --fail-missing -X .la

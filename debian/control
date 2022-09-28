@@ -1,0 +1,90 @@
+Source: exo
+Section: xfce
+Priority: optional
+Maintainer: Debian Xfce Maintainers <debian-xfce@lists.debian.org>
+Uploaders: Yves-Alexis Perez <corsac@debian.org>
+Build-Depends: debhelper-compat (= 13),
+               gtk-doc-tools,
+               intltool,
+               libglib2.0-dev,
+               libgtk-3-dev (>= 3.22.0),
+               libtool,
+               libxfce4ui-2-dev (>= 4.15.1),
+               libxfce4util-dev,
+               xfce4-dev-tools
+Rules-Requires-Root: no
+Standards-Version: 4.5.1
+Homepage: https://docs.xfce.org/xfce/exo/start
+Vcs-Git: https://salsa.debian.org/xfce-team/desktop/exo.git
+Vcs-Browser: https://salsa.debian.org/xfce-team/desktop/exo
+
+Package: libexo-2-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: libexo-2-0 (= ${binary:Version}),
+         libgtk-3-dev,
+         libxfce4util-dev (>= 4.10.0),
+         ${misc:Depends}
+Description: Development files for libexo (GTK-3 version)
+ libexo is a library for Xfce that contains a bunch of additional widgets and
+ a framework for editable toolbars (an improved version of the framework
+ present in GNOME), light-weight session management support, functions to
+ automatically synchronize object properties (based on GObject Binding
+ Properties) and several miscellaneous utility and helper functions for
+ application developers.
+ .
+ This package contains the headers and the static library
+ for libexo-2-0.
+
+Package: libexo-2-0
+Section: libs
+Architecture: any
+Depends: libexo-common, ${misc:Depends}, ${shlibs:Depends}
+Recommends: liburi-perl
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Description: Library with extensions for Xfce (GTK-3 version)
+ libexo is a library for Xfce that contains a bunch of additional widgets and
+ a framework for editable toolbars (an improved version of the framework
+ present in GNOME), light-weight session management support, functions to
+ automatically synchronize object properties (based on GObject Binding
+ Properties) and several miscellaneous utility and helper functions for
+ application developers.
+ .
+ While Xfce ships with quite a few libraries that are primarily targeted at
+ desktop development, libexo is targeted at application development, with a
+ focus on applications for Xfce.
+ .
+ This package provides GTK-3 version.
+
+Package: exo-utils
+Architecture: any
+Depends: libexo-2-0 (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Breaks: xfce4-cddrive-plugin (<= 0.0.1-0ubuntu2),
+        xfce4-volstatus-icon (<= 0.1.0-0ubuntu5)
+Description: Utility files for libexo
+ This package contains the Xfce settings plugin and the utility files for
+ libexo-2-0 which are:
+   - exo-csource
+   - exo-desktop-item-edit
+   - exo-open
+   - exo-preferred-applications
+
+Package: libexo-common
+Section: libs
+Architecture: all
+Multi-Arch: foreign
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Suggests: sensible-utils
+Description: libexo common files
+ libexo is a library for Xfce that contains a bunch of additional widgets and
+ a framework for editable toolbars (an improved version of the framework
+ present in GNOME), light-weight session management support, functions to
+ automatically synchronize object properties (based on GObject Binding
+ Properties) and several miscellaneous utility and helper functions for
+ application developers.
+ .
+ This package contains the common files in use by exo library. It ships
+ desktop files and documentation.
